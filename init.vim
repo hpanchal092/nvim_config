@@ -3,7 +3,7 @@
 " / / _ \/ / __/| |/ / /  ' \
 "/_/_//_/_/\__(_)___/_/_/_/_/
 "
-"
+
 "General settings
 filetype indent plugin on
 syntax on
@@ -33,12 +33,18 @@ set expandtab
 call plug#begin('~/.vim/plugged')
 
 Plug 'jiangmiao/auto-pairs'
-Plug 'joshdick/onedark.vim'
 Plug 'sheerun/vim-polyglot'
-Plug 'vim-airline/vim-airline'
+
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'kien/ctrlp.vim'
+
 Plug 'ycm-core/YouCompleteMe'
+
+Plug 'joshdick/onedark.vim'
+Plug 'vim-airline/vim-airline'
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 call plug#end()
 
@@ -50,3 +56,13 @@ colorscheme onedark
 "vim airline
 let g:airline_powerline_fonts = 1
 let g:airline_theme='onedark'
+
+"ycm stuff
+set completeopt-=preview
+
+"comment stuff
+nmap <C-_> gcc
+vmap <C-_> gc
+
+"telescope
+nnoremap <C-p> :Telescope find_files<cr>
