@@ -29,6 +29,9 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
+"clear highlights with ctrl+l
+nnoremap <C-l> :nohl<cr><C-l>
+
 "Vim Plug stuff
 call plug#begin('~/.vim/plugged')
 
