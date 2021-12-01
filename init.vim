@@ -33,7 +33,7 @@ set expandtab
 let mapleader=" "
 
 "clear highlights with ctrl+l
-nnoremap <C-l> <cmd>nohl<cr><C-l>
+nnoremap <leader>c <cmd>nohl<cr>
 
 "Vim Plug stuff
 call plug#begin('~/.vim/plugged')
