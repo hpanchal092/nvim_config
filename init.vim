@@ -44,13 +44,13 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 
-Plug 'ycm-core/YouCompleteMe'
-
 Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline'
 
+Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
 call plug#end()
 
@@ -71,8 +71,13 @@ nmap <C-_> gcc
 vmap <C-_> gc
 
 "telescope
+lua require('telescope').load_extension('fzy_native')
+
 nnoremap <C-p> <cmd>Telescope find_files<cr>
 nnoremap <leader>ps <cmd>Telescope live_grep<cr>
 
 "fugitive
 nnoremap <leader>gs <cmd>G<cr>
+
+"CoC
+source $HOME/.config/nvim/coc.vim
