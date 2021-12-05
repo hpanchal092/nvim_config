@@ -45,12 +45,14 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 
 Plug 'joshdick/onedark.vim'
-Plug 'vim-airline/vim-airline'
+Plug 'nvim-lualine/lualine.nvim'
 
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
+
+Plug 'neoclide/coc.nvim'
 
 call plug#end()
 
@@ -59,9 +61,8 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
 colorscheme onedark
 
-" Vim airline
-let g:airline_powerline_fonts = 1
-let g:airline_theme='onedark'
+" Lualine
+lua require 'lualine'.setup{ options = { theme = 'onedark' } }
 
 " Commentary
 nmap <C-_> gcc

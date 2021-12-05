@@ -1,9 +1,3 @@
-call plug#begin('~/.vim/plugged')
-
-Plug 'neoclide/coc.nvim'
-
-call plug#end()
-
 set signcolumn=number
 
 " set tab to work for autocompletion
