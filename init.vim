@@ -5,7 +5,7 @@
 "
 
 
-"General settings
+" General settings
 filetype indent plugin on
 syntax on
 
@@ -32,10 +32,10 @@ set expandtab
 
 let mapleader=" "
 
-"clear highlights with ctrl+l
+" Clear highlights
 nnoremap <leader>c <cmd>nohl<cr>
 
-"Vim Plug stuff
+" Vim Plug stuff
 call plug#begin('~/.vim/plugged')
 
 Plug 'jiangmiao/auto-pairs'
@@ -54,30 +54,27 @@ Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
 call plug#end()
 
-"colorscheme stuff
+" Colorscheme
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
 colorscheme onedark
 
-"vim airline
+" Vim airline
 let g:airline_powerline_fonts = 1
 let g:airline_theme='onedark'
 
-"ycm stuff
-set completeopt-=preview
-
-"comment stuff
+" Commentary
 nmap <C-_> gcc
 vmap <C-_> gc
 
-"telescope
+" Telescope
 lua require('telescope').load_extension('fzy_native')
 
 nnoremap <C-p> <cmd>Telescope find_files<cr>
 nnoremap <leader>ps <cmd>Telescope live_grep<cr>
 
-"fugitive
+" Fugitive
 nnoremap <leader>gs <cmd>G<cr>
 
-"CoC
+" CoC
 source $HOME/.config/nvim/coc.vim
