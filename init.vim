@@ -6,9 +6,6 @@
 
 
 " General settings
-filetype indent plugin on
-syntax on
-
 set nocompatible
 
 set hidden
@@ -39,12 +36,11 @@ nnoremap <leader>c <cmd>nohl<cr>
 call plug#begin('~/.vim/plugged')
 
 Plug 'jiangmiao/auto-pairs'
-Plug 'sheerun/vim-polyglot'
 
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 
-Plug 'joshdick/onedark.vim'
+Plug 'navarasu/onedark.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 
 Plug 'nvim-lua/popup.nvim'
@@ -52,17 +48,25 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
-Plug 'neoclide/coc.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': 'TSUpdate'}
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/nvim-cmp'
 
 call plug#end()
 
 " Colorscheme
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
+let g:onedark_darker_diagnostics = v:false
+let g:onedark_italic_comment = v:false
 colorscheme onedark
 
 " Lualine
-lua require 'lualine'.setup{ options = { theme = 'onedark' } }
+lua require 'lualine'.setup { options = { theme = 'onedark', icons_enabled = false } }
 
 " Commentary
 nmap <C-_> gcc
@@ -77,5 +81,20 @@ nnoremap <leader>ps <cmd>Telescope live_grep<cr>
 " Fugitive
 nnoremap <leader>gs <cmd>G<cr>
 
-" CoC
-source $HOME/.config/nvim/coc.vim
+" LSP
+source $HOME/.config/nvim/lsp.vim
+
+" Treesitter
+lua << EOF
+    require'nvim-treesitter.configs'.setup {
+        context_commentstring = {
+            enable = true
+        },
+        highlight = {
+            enable = true,
+        },
+        indent = {
+            enable = true
+        },
+    }
+EOF
