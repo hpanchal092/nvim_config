@@ -22,6 +22,7 @@ set clipboard=unnamedplus
 set number relativenumber
 set nowrap
 set scrolloff=8
+set signcolumn=number
 
 set shiftwidth=4
 set softtabstop=4
@@ -30,14 +31,14 @@ set expandtab
 let mapleader=" "
 
 " Clear highlights
-nnoremap <leader>c <cmd>nohl<cr>
+nnoremap <C-l> <cmd>nohl<cr>
 
 " Vim Plug stuff
 call plug#begin('~/.vim/plugged')
 
 Plug 'jiangmiao/auto-pairs'
-
 Plug 'tpope/vim-commentary'
+
 Plug 'tpope/vim-fugitive'
 
 Plug 'navarasu/onedark.nvim'
@@ -56,17 +57,18 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
 
 call plug#end()
 
 " Colorscheme
 set termguicolors
-let g:onedark_darker_diagnostics = v:false
-let g:onedark_italic_comment = v:false
+lua require('onedark').setup { code_style = { comments = 'none' } }
 colorscheme onedark
 
 " Lualine
-lua require 'lualine'.setup { options = { theme = 'onedark', icons_enabled = false } }
+lua require('lualine').setup { options = { theme = 'onedark', icons_enabled = false } }
 
 " Commentary
 nmap <C-_> gcc
@@ -75,8 +77,9 @@ vmap <C-_> gc
 " Telescope
 lua require('telescope').load_extension('fzy_native')
 
-nnoremap <C-p> <cmd>Telescope find_files<cr>
-nnoremap <leader>ps <cmd>Telescope live_grep<cr>
+nnoremap <C-P> <cmd>Telescope find_files<cr>
+nnoremap <C-F> <cmd>Telescope live_grep<cr>
+nnoremap <C-B> <cmd>Telescope buffers<cr>
 
 " Fugitive
 nnoremap <leader>gs <cmd>G<cr>
