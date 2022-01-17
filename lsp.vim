@@ -1,16 +1,5 @@
 lua << EOF
 
--- keybindings
-local opts = { noremap=true, silent=true }
-
-vim.api.nvim_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
 -- autocomplete
 local cmp = require'cmp'
@@ -67,39 +56,65 @@ cmp.setup({
     },
 })
 
--- language servers
 
-require('lspconfig').eslint.setup{
-    settings = {
-        format = { enable = true }
-    }
-}
-require('lspconfig').tsserver.setup{}
-require('lspconfig').sumneko_lua.setup{
-    settings = {
-        Lua = {
-            runtime = {
-                version = 'LuaJIT',
-                path = vim.split(package.path, ';')
-            },
-            diagnostics = {
-                globals = {'vim'}
-            },
-            workspace = {
-                library = {[vim.fn.expand('$VIMRUNTIME/lua')] = true, [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true}
-            }
+-- language server installer
+local lsp_installer = require("nvim-lsp-installer")
+
+lsp_installer.settings({
+    ui = {
+        icons = {
+            server_installed = "✓",
+            server_pending = "➜",
+            server_uninstalled = "✗"
         }
     }
-}
-require('lspconfig')['pyright'].setup {
-    settings = {
-        python = {
-            analysis = { 
-                typeCheckingMode = "off",
-                autoSearchPaths = true,
-                useLibraryCodeForTypes = true,
+})
+
+-- keybindings
+local function on_attach(client, bufnr)
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+    local opts = { noremap=true, silent=true }
+
+    buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+    buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+    buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+end
+
+local enhance_server_opts = {
+    ["eslintls"] = function(opts)
+        opts.settings = {
+            format = {
+                enable = true,
+            },
+        }
+    end,
+    ["pyright"] = function(opts)
+        opts.settings = {
+            python = {
+                analysis = { 
+                    typeCheckingMode = "off",
+                    autoSearchPaths = true,
+                    useLibraryCodeForTypes = true,
+                }
             }
         }
-    }
+    end,
 }
+
+lsp_installer.on_server_ready(function(server)
+    local opts = { on_attach = on_attach }
+
+    if enhance_server_opts[server.name] then
+        enhance_server_opts[server.name](opts)
+    end
+
+    server:setup(opts)
+end)
 EOF

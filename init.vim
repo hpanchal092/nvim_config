@@ -53,6 +53,8 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': 'TSUpdate'}
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 
 Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/nvim-lsp-installer'
+
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
@@ -84,9 +86,6 @@ nnoremap <C-B> <cmd>Telescope buffers<cr>
 " Fugitive
 nnoremap <leader>gs <cmd>G<cr>
 
-" LSP
-source $HOME/.config/nvim/lsp.vim
-
 " Treesitter
 lua << EOF
     require'nvim-treesitter.configs'.setup {
@@ -101,3 +100,6 @@ lua << EOF
         },
     }
 EOF
+
+" LSP
+source $HOME/.config/nvim/lsp.vim
