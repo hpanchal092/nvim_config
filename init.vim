@@ -32,8 +32,6 @@ set splitbelow
 
 let mapleader=" "
 
-tnoremap <silent> <ESC> <C-\><C-N>
-
 " Vim Plug stuff
 call plug#begin('~/.vim/plugged')
 
@@ -81,7 +79,6 @@ vmap <C-_> gc
 
 " Telescope
 lua require('telescope').load_extension('fzy_native')
-
 nnoremap <C-P> <cmd>Telescope find_files<cr>
 nnoremap <C-F> <cmd>Telescope live_grep<cr>
 nnoremap <C-B> <cmd>Telescope buffers<cr>
