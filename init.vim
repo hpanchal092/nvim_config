@@ -27,25 +27,25 @@ set signcolumn=number
 set shiftwidth=4
 set softtabstop=4
 set expandtab
+set splitright
+set splitbelow
 
 let mapleader=" "
 
-" Clear highlights
-nnoremap <C-l> <cmd>nohl<cr>
+tnoremap <silent> <ESC> <C-\><C-N>
 
 " Vim Plug stuff
 call plug#begin('~/.vim/plugged')
 
-Plug 'jiangmiao/auto-pairs'
+Plug 'windwp/nvim-autopairs'
 Plug 'tpope/vim-commentary'
-
-Plug 'tpope/vim-fugitive'
 
 Plug 'navarasu/onedark.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
+
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
@@ -63,6 +63,9 @@ Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 
 call plug#end()
+
+" Autopairs
+lua require('nvim-autopairs').setup()
 
 " Colorscheme
 set termguicolors
@@ -88,18 +91,18 @@ nnoremap <leader>gs <cmd>G<cr>
 
 " Treesitter
 lua << EOF
-    require'nvim-treesitter.configs'.setup {
-        context_commentstring = {
-            enable = true
-        },
-        highlight = {
-            enable = true,
-        },
-        indent = {
-            enable = true
-        },
-    }
+require('nvim-treesitter.configs').setup {
+    context_commentstring = {
+        enable = true
+    },
+    highlight = {
+        enable = true,
+    },
+    indent = {
+        enable = true
+    },
+}
 EOF
 
 " LSP
-source $HOME/.config/nvim/lsp.vim
+source $HOME/.config/nvim/lsp.lua
